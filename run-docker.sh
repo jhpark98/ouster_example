@@ -7,8 +7,9 @@ IMG=wilselby/ouster_example:latest
 if test -c /dev/nvidia0
 then
     docker run --rm -it \
+      --platform linux/amd64 \
       --runtime=nvidia \
-      --privileged \
+      --privileged multiarch/qemu-user-static --reset -p yes \
       --device /dev/dri:/dev/dri \
       --env="DISPLAY" \
       --env="QT_X11_NO_MITSHM=1" \
@@ -17,6 +18,7 @@ then
       bash
 else
     docker run --rm -it \
+      --platform linux/amd64 \
       -e DISPLAY \
       --device=/dev/dri:/dev/dri \
       -v "/tmp/.X11-unix:/tmp/.X11-unix" \

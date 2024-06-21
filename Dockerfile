@@ -40,3 +40,5 @@ ENV NVIDIA_DRIVER_CAPABILITIES \
 ADD /scripts /scripts
 
 RUN bash /scripts/install_scripts_for_docker.bash
+
+RUN echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
