@@ -8,9 +8,11 @@ docker run -it --net=host \
                --env="DISPLAY=$DISPLAY" \
                --env="QT_X11_NO_MITSHM=1" \
                --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-               -v /home/warthog/bags:/root/bags \
+               -v /media/warthog/SSD1/bags:/root/bags \
   ouster
+              #  -v /home/warthog/SSD/bags:/root/bags
 
+            #    --entrypoint entrypoint.sh \
 
 # docker run -it --net=host \
 #     --gpus all \

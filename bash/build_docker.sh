@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t cudalanedet -f Dockerfile .
+docker build -t cartographer_ros_ouster -f Dockerfile .
