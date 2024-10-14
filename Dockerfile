@@ -1,44 +1,15 @@
-FROM ros:melodic-perception-bionic
+# Use the official OSRF ROS Noetic Desktop Full image as a base
+FROM osrf/ros:noetic-desktop-full-focal
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV TERM xterm
+# Set the working directory
+WORKDIR /workspace
 
-# Some packages copied from:
-# https://gitlab.com/nvidia/opengl/blob/ubuntu16.04/base/Dockerfile
+# Install any additional packages you need
+# Uncomment and modify the following line to install specific packages
+# RUN apt-get update && apt-get install -y <your-packages>
 
-RUN apt-get update \
-  && apt-get dist-upgrade -y \
-  && apt-get install -y --no-install-recommends \
-    git \
-    build-essential \
-    dialog \
-    make \
-    gcc \
-    g++ \
-    locales \
-    wget \
-    software-properties-common \
-    sudo \
-    libgl1-mesa-glx \
-    libgl1-mesa-dri \
-    libxau6 \
-    libxdmcp6 \
-    libxcb1 \
-    libxext6 \
-    libx11-6 \
-    tmux \
-    xdg-utils \
-    eog \
- && rm -rf /var/lib/apt/lists/*
+# Optional: Install additional dependencies for your ROS packages
+# RUN apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential
 
-# nvidia-container-runtime
-ENV NVIDIA_VISIBLE_DEVICES \
-        ${NVIDIA_VISIBLE_DEVICES:-all}
-ENV NVIDIA_DRIVER_CAPABILITIES \
-        ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics,compat32,utility
-
-ADD /scripts /scripts
-
-RUN bash /scripts/install_scripts_for_docker.bash
-
-RUN echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
+# Set up your entrypoint
+CMD ["bash"]

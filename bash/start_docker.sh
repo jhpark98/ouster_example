@@ -2,7 +2,8 @@
 
 xhost +local:docker
 
-docker run -it --net=host \
+docker run -it \
+               --net=host \
                --gpus all \
                --env="NVIDIA_DRIVER_CAPABILITIES=all" \
                --env="DISPLAY=$DISPLAY" \

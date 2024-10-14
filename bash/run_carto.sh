@@ -1,24 +1,30 @@
 #!/bin/bash
 
 xhost +local:root
-IMG=wilselby/ouster_example:latest
+# xhost +local:docker
+
+# IMG=wilselby/ouster_example:latest
+IMG=ouster_example:EcoCAR # from local build
+BAG_DIR=/home/husky/bags
 
 # If NVIDIA is present, use Nvidia-docker
 if test -c /dev/nvidia0
 then
+    echo "Using image:" $IMG 
     docker run --rm -it \
-      --platform linux/amd64 \
+      --net=host --ipc=host --pid=host \
+      --gpus all \
       --runtime=nvidia \
-      --privileged multiarch/qemu-user-static --reset -p yes \
+      --privileged \
       --device /dev/dri:/dev/dri \
       --env="DISPLAY" \
       --env="QT_X11_NO_MITSHM=1" \
       -v "/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+      -v $BAG_DIR:/root/bags \
       $IMG \
       bash
 else
     docker run --rm -it \
-      --platform linux/amd64 \
       -e DISPLAY \
       --device=/dev/dri:/dev/dri \
       -v "/tmp/.X11-unix:/tmp/.X11-unix" \
@@ -65,4 +71,3 @@ fi
 
 # xdg-open office_demo_9_25_19.bag_xray_xy_all.png
 # xdg-open office_demo_9_25_19.bag_probability_grid.png
-
